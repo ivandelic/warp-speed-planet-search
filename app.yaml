@@ -1,0 +1,34 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: warp-speed-planet-search
+  labels:
+    app: warp-speed-planet-search
+spec:
+  type: NodePort
+  selector:
+    app: warp-speed-planet-search
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: warp-speed-planet-search
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: warp-speed-planet-search
+        version: v1
+    spec:
+      containers:
+      - name: warp-speed-planet-search
+        image: warp-speed-planet-search
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+---
