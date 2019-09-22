@@ -4,8 +4,6 @@ public class Planet {
 	
 	public static Planet earth = new Planet(1, 1, 1, 288, 1, Star.Sun);
 	
-	private Star star;
-	
 	/*
 	 * Mean Radius of the Planet, as reference value the earth radius is taken.
 	 */
@@ -31,14 +29,8 @@ public class Planet {
 	 */
 	private double distance;
 	
-	public Star getStar() {
-		return star;
-	}
-
-	public void setStar(Star star) {
-		this.star = star;
-	}
-
+	private Star star;
+	
 	public double getRadius() {
 		return radius;
 	}
@@ -77,6 +69,14 @@ public class Planet {
 
 	public void setDistance(double distance) {
 		this.distance = distance;
+	}
+	
+	public Star getStar() {
+		return star;
+	}
+
+	public void setStar(Star star) {
+		this.star = star;
 	}
 
 	/**

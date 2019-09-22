@@ -6,7 +6,7 @@ import java.util.List;
 public class Star {
 	
 	public static Star Sun = new Star(1, 1, 1, new ArrayList<>()); // TODO dlx
-
+	
 	/**
 	 * Mass of the star compared to the sun [0.01 - 1500] 
 	 */
@@ -21,6 +21,8 @@ public class Star {
 	 * Luminosity compared to the Sun [10^-4 - 10^5] 
 	 */
 	private double luminosity;
+	
+	public Galaxy galaxy;
 	
 	List<Planet> planets = new ArrayList<>();
 	
@@ -46,6 +48,14 @@ public class Star {
 
 	public void setLuminosity(double luminosity) {
 		this.luminosity = luminosity;
+	}
+	
+	public Galaxy getGalaxy() {
+		return galaxy;
+	}
+
+	public void setGalaxy(Galaxy galaxy) {
+		this.galaxy = galaxy;
 	}
 
 	public List<Planet> getPlanets() {
