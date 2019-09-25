@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import com.ivandelic.prototype.warp.model.Galaxy;
 import com.ivandelic.prototype.warp.model.Planet;
 import com.ivandelic.prototype.warp.model.Star;
 
@@ -12,9 +13,9 @@ public class SkyTest {
 	
 	@Test
 	public void testPlanetEsi_Earht() {
-		Star star1 = new Star(1, 5000, 10, new ArrayList<Planet>());
+		Star star1 = new Star(1, 5000, 10, Galaxy.MILKY_WAY, new ArrayList<Planet>());
 		Planet earth2 = new Planet(1, 1, 1, 288, 1, star1);
-		Planet earth = Planet.earth;
+		Planet earth = Planet.EARTH;
 		
 		double esi = earth2.getEsi();
 		
@@ -23,9 +24,9 @@ public class SkyTest {
 	
 	@Test
 	public void testPlanetEsi_NotEarth() {
-		Star star1 = new Star(1, 5000, 10, new ArrayList<Planet>());
+		Star star1 = new Star(1, 5000, 10, Galaxy.MILKY_WAY, new ArrayList<Planet>());
 		Planet earth2 = new Planet(1, 1, 1, 287, 1, star1);
-		Planet earth = Planet.earth;
+		Planet earth = Planet.EARTH;
 		
 		double esi = earth2.getEsi();
 		
@@ -34,8 +35,8 @@ public class SkyTest {
 	
 	@Test
 	public void testStarHabitability() {
-		Star star1 = new Star(1, 5000, 10, new ArrayList<Planet>());
-		Star star2 = new Star(0.01, 5000, 100, new ArrayList<Planet>());
+		Star star1 = new Star(1, 5000, 10, Galaxy.MILKY_WAY, new ArrayList<Planet>());
+		Star star2 = new Star(0.01f, 5000, 100, Galaxy.MILKY_WAY, new ArrayList<Planet>());
 		
 		boolean isHabitable1 = star1.isHabbitable();
 		Assertions.assertTrue(isHabitable1);
@@ -46,16 +47,16 @@ public class SkyTest {
 	
 	@Test
 	public void testPlanetHabitability() {
-		Star star1 = new Star(1, 5000, 1.4, new ArrayList<Planet>());
-		Star star2 = new Star(0.01, 5000, 100, new ArrayList<Planet>());
+		Star star1 = new Star(1, 5000, 1.4f, Galaxy.MILKY_WAY, new ArrayList<Planet>());
+		Star star2 = new Star(0.01f, 5000, 100, Galaxy.MILKY_WAY, new ArrayList<Planet>());
 		
-		Planet planet1 = new Planet(1, 1, 1, 295, 1.4, star1);
+		Planet planet1 = new Planet(1, 1, 1, 295, 1.4f, star1);
 		Planet planet2 = new Planet(1, 1, 1, 100, 4, star2);
 		
-		boolean isHabitable1 = planet1.isHabbitable();
+		boolean isHabitable1 = planet1.isHabbitable(0.8);
 		Assertions.assertTrue(isHabitable1);
 		
-		boolean isHabitable2 = planet2.isHabbitable();
+		boolean isHabitable2 = planet2.isHabbitable(0.8);
 		Assertions.assertFalse(isHabitable2);
 	}
 

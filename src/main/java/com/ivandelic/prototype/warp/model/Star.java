@@ -1,52 +1,56 @@
 package com.ivandelic.prototype.warp.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class Star {
+public class Star implements Serializable {
 	
-	public static Star Sun = new Star(1, 1, 1, new ArrayList<>()); // TODO dlx
+	private static final long serialVersionUID = 1L;
+
+	public static Star SUN = new Star(1, 1, 1, Galaxy.MILKY_WAY, Arrays.asList(Planet.EARTH));
 	
 	/**
 	 * Mass of the star compared to the sun [0.01 - 1500] 
 	 */
-	private double mass;
+	private float mass;
 	
 	/**
 	 * Surface temperature [1.000K - 30.000K]
 	 */
-	private double temperature;
+	private float temperature;
 	
 	/*
 	 * Luminosity compared to the Sun [10^-4 - 10^5] 
 	 */
-	private double luminosity;
+	private float luminosity;
 	
-	public Galaxy galaxy;
+	private Galaxy galaxy;
 	
-	List<Planet> planets = new ArrayList<>();
+	private List<Planet> planets = new ArrayList<>();
 	
-	public double getMass() {
+	public float getMass() {
 		return mass;
 	}
 
-	public void setMass(double mass) {
+	public void setMass(float mass) {
 		this.mass = mass;
 	}
 
-	public double getTemperature() {
+	public float getTemperature() {
 		return temperature;
 	}
 
-	public void setTemperature(double temperature) {
+	public void setTemperature(float temperature) {
 		this.temperature = temperature;
 	}
 
-	public double getLuminosity() {
+	public float getLuminosity() {
 		return luminosity;
 	}
 
-	public void setLuminosity(double luminosity) {
+	public void setLuminosity(float luminosity) {
 		this.luminosity = luminosity;
 	}
 	
@@ -66,10 +70,11 @@ public class Star {
 		this.planets = planets;
 	}
 	
-	public Star(double mass, double temperature, double luminosity, List<Planet> planets) {
+	public Star(float mass, float temperature, float luminosity, Galaxy galaxy, List<Planet> planets) {
 		this.mass = mass;
 		this.temperature = temperature;
 		this.luminosity = luminosity;
+		this.galaxy = galaxy;
 		this.planets = planets;
 	}
 	

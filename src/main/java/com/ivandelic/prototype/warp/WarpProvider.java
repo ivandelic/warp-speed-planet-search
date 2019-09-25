@@ -1,7 +1,5 @@
 package com.ivandelic.prototype.warp;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -9,18 +7,29 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @ApplicationScoped
 public class WarpProvider {
-    private final AtomicReference<String> message = new AtomicReference<>();
 
+	private final double planetMinEsi;
+	private final String universeFilename;
+	private final String universeMode;
+	
     @Inject
-    public WarpProvider(@ConfigProperty(name = "app.greeting") String message) {
-        this.message.set(message);
+    public WarpProvider(@ConfigProperty(name = "warp.planetMinEsi") double planetMinEsi,
+    		@ConfigProperty(name = "warp.universeFilename") String universeFilename,
+    		@ConfigProperty(name = "warp.universeMode") String universeMode) {
+        this.planetMinEsi = planetMinEsi;
+        this.universeFilename = universeFilename;
+        this.universeMode = universeMode;
     }
 
-    String getMessage() {
-        return message.get();
-    }
+	public double getPlanetMinEsi() {
+		return planetMinEsi;
+	}
 
-    void setMessage(String message) {
-        this.message.set(message);
-    }
+	public String getUniverseFilename() {
+		return universeFilename;
+	}
+
+	public String getUniverseMode() {
+		return universeMode;
+	}
 }

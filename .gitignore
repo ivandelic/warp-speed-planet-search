@@ -17,6 +17,7 @@ node_modules/
 *.ear
 *.db
 rebel.xml
+*.dat
 
 ######################
 # Windows
