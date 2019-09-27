@@ -5,33 +5,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Galaxy entity
+ * @author Ivan Delic
+ */
 public class Galaxy implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public static Galaxy MILKY_WAY = new Galaxy(Universe.UNIVERSE, Arrays.asList(Star.SUN));
+	public static final Galaxy MILKY_WAY = new Galaxy(Universe.UNIVERSE, new Star[] { Star.SUN });
 	
-	private List<Star> stars = new ArrayList<>();
-	private Universe universe;
+	private Star[] stars;
 	
-	public Galaxy(Universe universe, List<Star> stars) {
+	private final Universe universe;
+	
+	public Galaxy(Universe universe, Star[] stars) {
 		this.universe = universe;
 		this.stars = stars;
 	}
 
-	public List<Star> getStars() {
+	public Star[] getStars() {
 		return stars;
 	}
 
-	public void setStars(List<Star> stars) {
+	public void setStars(Star[] stars) {
 		this.stars = stars;
 	}
-	
+
 	public Universe getUniverse() {
 		return universe;
-	}
-
-	public void setUniverse(Universe universe) {
-		this.universe = universe;
 	}
 }

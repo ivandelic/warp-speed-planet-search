@@ -2,87 +2,93 @@ package com.ivandelic.prototype.warp.model;
 
 import java.io.Serializable;
 
+/**
+ * Planet entity
+ * @author Ivan Delic
+ */
 public class Planet implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public static Planet EARTH = new Planet(1, 1, 1, 288, 1, Star.SUN);
+	public static final Planet EARTH = new Planet(1, 1, 1, 288, 1, 1, Star.SUN);
 	
 	/*
 	 * Mean Radius of the Planet, as reference value the earth radius is taken.
 	 */
-	private float radius;
+	private final float radius;
 	
 	/*
 	 * The Bulk density of the planet, with a reference value of the earth bulk density.
 	 */
-	private float density;
+	private final float density;
 	
 	/*
 	 * The escape velocity of the planet, with a reference value of earths escapes value.
 	 */
-	private float velocity;
+	private final float velocity;
 	
 	/**
 	 * The surface temperature of the planet, with a reference value of 288K (15°C).
 	 */
-	private float temperature;
+	private final float temperature;
 	
 	/**
 	 * The distance of planet from the sun in AU (1AU = distance from Earth to Sun).
 	 */
-	private float distance;
+	private final float distance;
 	
-	private Star star;
+	/**
+	 * The ESI (Schulze-Makuch, 2011; University of Puerto Rico, 2015) is an index of earth-likeness for exoplanets
+	 */
+	private final float esi;
+	
+	private final Star star;
 	
 	public float getRadius() {
 		return radius;
-	}
-
-	public void setRadius(float radius) {
-		this.radius = radius;
 	}
 
 	public float getDensity() {
 		return density;
 	}
 
-	public void setDensity(float density) {
-		this.density = density;
-	}
-
 	public float getVelocity() {
 		return velocity;
-	}
-
-	public void setVelocity(float velocity) {
-		this.velocity = velocity;
 	}
 
 	public float getTemperature() {
 		return temperature;
 	}
 
-	public void setTemperature(float temperature) {
-		this.temperature = temperature;
-	}
-	
 	public float getDistance() {
 		return distance;
 	}
 
-	public void setDistance(float distance) {
-		this.distance = distance;
+	public float getEsi() {
+		return esi;
 	}
-	
+
 	public Star getStar() {
 		return star;
 	}
 
-	public void setStar(Star star) {
+	/**
+	 * Creates the planet.
+	 * @param radius
+	 * @param density
+	 * @param velocity
+	 * @param temperature
+	 */
+	private Planet(float radius, float density, float velocity, float temperature, float distance, float esi, Star star) {
+		this.radius = radius;
+		this.density = density;
+		this.velocity = velocity;
+		this.temperature = temperature;
+		this.distance = distance;
+		this.esi = esi;
 		this.star = star;
 	}
-
+	
 	/**
 	 * Creates the planet.
 	 * @param radius
@@ -97,6 +103,7 @@ public class Planet implements Serializable {
 		this.temperature = temperature;
 		this.distance = distance;
 		this.star = star;
+		this.esi = (float) calculateEsi();
 	}
 	
 	/**
@@ -106,7 +113,7 @@ public class Planet implements Serializable {
 	 * @param planet Planet to copare with earts.
 	 * @return The index is a number between zero and one.
 	 */
-	public double getEsi() {
+	private double calculateEsi() {
 		double esi = 
 				Math.pow(1 - Math.abs((this.radius - EARTH.radius) / (this.radius + EARTH.radius)), (0.57 / 1)) *
 				Math.pow(1 - Math.abs((this.density - EARTH.density) / (this.density + EARTH.density)), (1.07 / 2)) *
@@ -126,7 +133,4 @@ public class Planet implements Serializable {
 		}
 		return false;
 	}
-	
-	
-
 }

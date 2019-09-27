@@ -5,23 +5,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Universe entity
+ * @author Ivan Delic
+ */
 public class Universe implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public static Universe UNIVERSE = new Universe(Arrays.asList(Galaxy.MILKY_WAY));
+	public static final Universe UNIVERSE = new Universe(new Galaxy[] { Galaxy.MILKY_WAY });
 	
-	private List<Galaxy> galaxies = new ArrayList<>();
+	private Galaxy[] galaxies;
 	
-	public Universe(List<Galaxy> galaxies) {
+	public Universe(Galaxy[] galaxies) {
 		this.galaxies = galaxies;
 	}
-	
-	public List<Galaxy> getGalaxies() {
+
+	public Galaxy[] getGalaxies() {
 		return galaxies;
 	}
 
-	public void setGalaxies(List<Galaxy> galaxies) {
+	public void setGalaxies(Galaxy[] galaxies) {
 		this.galaxies = galaxies;
 	}
 }

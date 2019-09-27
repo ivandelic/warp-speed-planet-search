@@ -8,6 +8,10 @@ import java.io.ObjectOutputStream;
 
 import com.ivandelic.prototype.warp.model.Universe;
 
+/**
+ * Serialization services for storing and restoring objects from external sources.
+ * @author Ivan Delic
+ */
 public class SerialziationService {
 	
 	public static final void serialize(Universe universe, String filename) {

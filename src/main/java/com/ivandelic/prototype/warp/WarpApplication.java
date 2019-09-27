@@ -1,7 +1,6 @@
 package com.ivandelic.prototype.warp;
 
 import java.util.Set;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,27 +15,45 @@ import com.ivandelic.prototype.warp.service.UniverseService;
 import io.helidon.common.CollectionsHelper;
 
 @ApplicationScoped
-@ApplicationPath("/")
+@ApplicationPath("/universe")
 public class WarpApplication extends Application {
 	
-	private final static Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger log = Logger.getLogger(WarpApplication.class.getTypeName());
+	
+	private static final String GENERATE_UNIFORMED = "generateUniformed";
+	private static final String GENERATE_DISPERSED = "generateDispersed";
+	private static final String LOAD = "load";
 	
 	private final WarpProvider warpProvider;
 	
-	private Universe universe;
+	private final Universe universe;
 	
 	@Inject
 	public WarpApplication(WarpProvider warpProvider) {
 		this.warpProvider = warpProvider;
 		
-		if ("load".equals(warpProvider.getUniverseMode())) {
+		String mode = warpProvider.getUniverseMode();
+		
+		if (LOAD.equals(mode)) {
 			log.info(String.format("Loading universe..."));
-			loadUniverse(warpProvider.getUniverseFilename());
-			log.info(String.format("Universe is loaded from %s!", warpProvider.getUniverseFilename()));
-		} else {
+			String filename = warpProvider.getUniverseFilename();
+			universe = SerialziationService.deserialize(filename);
+			log.info(String.format("Universe is loaded from %s!", filename));
+		}
+		else if (GENERATE_DISPERSED.equals(mode)) {
 			log.info(String.format("Creating universe..."));
-			createUniverse();
+			universe = UniverseService.createUniverse();
 			log.info(String.format("Universe is created!"));
+		}
+		else if (GENERATE_UNIFORMED.equals(mode)) {
+			log.info(String.format("Creating universe..."));
+			universe = UniverseService.createUniverse(10, 1_000_000, 5);
+			log.info(String.format("Universe is created!"));
+		}
+		else {
+			log.info(String.format("Creating simple universe..."));
+			universe = Universe.UNIVERSE;
+			log.info(String.format("Simple universe is created!"));
 		}
 	}
 	
@@ -47,13 +64,5 @@ public class WarpApplication extends Application {
 
 	public Universe getUniverse() {
 		return universe;
-	}
-	
-	private final void createUniverse() {
-		this.universe = UniverseService.createUniverse();
-	}
-	
-	private final void loadUniverse(String filename) {
-		this.universe = SerialziationService.deserialize(filename);
 	}
 }

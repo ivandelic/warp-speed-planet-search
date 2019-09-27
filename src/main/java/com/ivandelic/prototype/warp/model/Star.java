@@ -5,77 +5,65 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Star entity
+ * @author Ivan Delic
+ */
 public class Star implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public static Star SUN = new Star(1, 1, 1, Galaxy.MILKY_WAY, Arrays.asList(Planet.EARTH));
+	public static final Star SUN = new Star(1, 1, 1, Galaxy.MILKY_WAY, new Planet[] { Planet.EARTH });
 	
 	/**
 	 * Mass of the star compared to the sun [0.01 - 1500] 
 	 */
-	private float mass;
+	private final float mass;
 	
 	/**
 	 * Surface temperature [1.000K - 30.000K]
 	 */
-	private float temperature;
+	private final float temperature;
 	
 	/*
 	 * Luminosity compared to the Sun [10^-4 - 10^5] 
 	 */
-	private float luminosity;
+	private final float luminosity;
 	
-	private Galaxy galaxy;
+	private final Galaxy galaxy;
 	
-	private List<Planet> planets = new ArrayList<>();
+	private Planet[] planets;
 	
 	public float getMass() {
 		return mass;
-	}
-
-	public void setMass(float mass) {
-		this.mass = mass;
 	}
 
 	public float getTemperature() {
 		return temperature;
 	}
 
-	public void setTemperature(float temperature) {
-		this.temperature = temperature;
-	}
-
 	public float getLuminosity() {
 		return luminosity;
 	}
 
-	public void setLuminosity(float luminosity) {
-		this.luminosity = luminosity;
-	}
-	
 	public Galaxy getGalaxy() {
 		return galaxy;
 	}
 
-	public void setGalaxy(Galaxy galaxy) {
-		this.galaxy = galaxy;
-	}
-
-	public List<Planet> getPlanets() {
+	public Planet[] getPlanets() {
 		return planets;
 	}
 
-	public void setPlanets(List<Planet> planets) {
+	public void setPlanets(Planet[] planets) {
 		this.planets = planets;
 	}
-	
-	public Star(float mass, float temperature, float luminosity, Galaxy galaxy, List<Planet> planets) {
+
+	public Star(float mass, float temperature, float luminosity, Galaxy galaxy, Planet[] planets) {
 		this.mass = mass;
 		this.temperature = temperature;
 		this.luminosity = luminosity;
 		this.galaxy = galaxy;
-		this.planets = planets;
+		this.setPlanets(planets);
 	}
 	
 	/**
@@ -98,9 +86,9 @@ public class Star implements Serializable {
 	 * Checks whether star can be habitable.
 	 * @return True if the star is habitable, false otherwise.
 	 */
-	public boolean isHabbitable() {
-		if (this.mass > 0.08 && this.mass < 1.4) {
-			if (this.temperature >= 2400 && this.temperature <= 7500)
+	public boolean isHabbitable(double refMassMin, double refMassMax,double refTempMin, double refTempMax) {
+		if (this.mass > refMassMin && this.mass < refMassMax) {
+			if (this.temperature >= refTempMin && this.temperature <= refTempMax)
 				return true;
 		}
 		return false;
