@@ -1,7 +1,7 @@
 
 # Warp Speed Microservices
 
-This example implements a simple habitable planet search using Java Streams to demonstrate speed of GraalVM
+The component implements a simple habitable-planet search across universe using Java Streams to demonstrate speed of Graal compiler in comparison with C2 from the HotSpot platform.
 
 ## Prerequisites
 
@@ -10,15 +10,6 @@ This example implements a simple habitable planet search using Java Streams to d
 3. Docker 17 or newer (if you want to build and run docker images)
 4. Kubernetes 1.7.4 or newer cluster
 5. Kubectl 1.7.4 or newer for deploying to Kubernetes
-
-Verify prerequisites
-```
-java -version
-mvn --version
-docker --version
-minikube version
-kubectl version --short
-```
 
 ## Build
 
@@ -29,14 +20,14 @@ mvn package
 ## Start the application
 
 ```
-java -jar target/warp-speed-microservice-graal.jar
+java -jar target/warp-speed-planet-search.jar
 ```
 
 ## Exercise the application
 
 ```
-curl -X GET http://localhost:8080/greet
-{"message":"Hello World!"}
+curl -X GET http://localhost:8080/universe/traverse
+{"habitablePlanets":21,"time":2261}
 ```
 
 ## Try health and metrics
@@ -61,16 +52,14 @@ curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
 ## Build the Docker Image
 
 ```
-docker build -t warp-speed-microservice-graal .
+docker build -t warp-speed-planet-search .
 ```
 
 ## Start the application with Docker
 
 ```
-docker run --rm -p 8080:8080 warp-speed-microservice-graal:latest
+docker run --rm -p 8080:8080 warp-speed-planet-search:latest
 ```
-
-Exercise the application as described above
 
 ## Deploy the application to Kubernetes
 
@@ -78,5 +67,5 @@ Exercise the application as described above
 kubectl cluster-info                         # Verify which cluster
 kubectl get pods                             # Verify connectivity to cluster
 kubectl create -f app.yaml               # Deploy application
-kubectl get service warp-speed-microservice-graal  # Verify deployed service
+kubectl get service warp-speed-planet-search  # Verify deployed service
 ```
