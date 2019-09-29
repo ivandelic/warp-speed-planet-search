@@ -1,7 +1,6 @@
 package com.ivandelic.prototype.warp;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -14,6 +13,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import com.ivandelic.prototype.warp.service.UniverseService;
 
@@ -35,6 +36,7 @@ public class WarpResource {
     }
     
     @GET
+    @Operation(summary = "Find habitable planets in the universe traversing galaxies, stars and planets.", description = " Algorithm is using classic looping and Java Streams.")
     @Produces(MediaType.APPLICATION_JSON)
     public JsonObject findHabitableDemo(
     		@QueryParam(value = "planetMinEsi") Double planetMinEsi,

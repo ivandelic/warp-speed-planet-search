@@ -17,12 +17,13 @@ RUN echo "done!"
 
 # 2nd stage, build the runtime image
 FROM openjdk:8-jre-slim
+#FROM oracle/graalvm-ce
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
 COPY --from=build /helidon/target/warp-speed-planet-search.jar ./
 COPY --from=build /helidon/target/libs ./libs
 
-CMD ["java", "-jar", "warp-speed-planet-search.jar"]
+CMD ["java", "-Xmx6144m", "-jar", "warp-speed-planet-search.jar"]
 
 EXPOSE 8080
