@@ -38,7 +38,7 @@ kubernetes-deploy:
          command: create secret docker-registry wercker --docker-server=$DOCKER_REGISTRY --docker-email=nobody@oracle.com --docker-username=$DOCKER_USERNAME --docker-password='$OCI_AUTH_TOKEN'; echo create registry secret
       - script:
          name: "Visualise Kubernetes config"
-         code: cat kubernetes.yml
+         code: cat kubernetes.ymll
       - kubectl:
          name: deploy to kubernetes
          server: $KUBERNETES_MASTER
