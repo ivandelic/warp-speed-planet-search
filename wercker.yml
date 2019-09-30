@@ -5,7 +5,8 @@ build:
    - wercker/maven:
       goals: install
       cache_repo: true
-
+      version: 3.5.2
+      
 docker-build:
    steps:
    - internal/docker-build:
