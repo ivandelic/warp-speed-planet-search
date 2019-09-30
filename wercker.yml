@@ -5,6 +5,18 @@ build:
    - wercker/maven:
       goals: install
       cache_repo: true
+
+docker-build:
+   steps:
    - internal/docker-build:
       dockerfile: Dockerfile
       image-name: warp-speed-planet-search
+
+docker-push:
+   steps:
+   - internal/docker-push:
+      image-name: warp-speed-planet-search
+      username: $DOCKER_USERNAME
+      password: $OCI_AUTH_TOKEN
+      registry: https://$DOCKER_REGISTRY/v2
+      repository: $DOCKER_REGISTRY/$DOCKER_REPO
