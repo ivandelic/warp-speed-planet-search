@@ -3,9 +3,8 @@ box: maven:3.5.4-jdk-9
 build:
   steps:
    - wercker/maven:
-      goals: install
-      cache_repo: true
-      version: 3.5.2
+      goals: clean install
+      cache_repo: false
       
 docker-build:
    steps:
