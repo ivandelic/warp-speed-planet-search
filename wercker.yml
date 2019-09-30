@@ -37,7 +37,7 @@ kubernetes-deploy:
          insecure-skip-tls-verify: true
          command: create secret docker-registry wercker --docker-server=$DOCKER_REGISTRY --docker-email=nobody@oracle.com --docker-username=$DOCKER_USERNAME --docker-password='$OCI_AUTH_TOKEN'; echo create registry secret
       - script:
-         name: "Visualise Kubernetes config"
+         name: "Visualise config"
          code: cat kubernetes.ymll
       - kubectl:
          name: deploy to kubernetes
