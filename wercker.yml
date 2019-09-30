@@ -6,14 +6,11 @@ build:
       goals: clean install
       cache_repo: false
       
-docker-build:
+docker-build-and-push:
    steps:
    - internal/docker-build:
       dockerfile: Dockerfile
       image-name: warp-speed-planet-search
-
-docker-push:
-   steps:
    - internal/docker-push:
       image-name: warp-speed-planet-search
       username: $DOCKER_USERNAME
