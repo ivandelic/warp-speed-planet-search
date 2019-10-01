@@ -6,10 +6,10 @@ build:
       goals: clean install
       cache_repo: false
       
-docker-build-and-push:
+docker-build-and-push-hotspot:
    steps:
    - internal/docker-build:
-      dockerfile: Dockerfile
+      dockerfile: hotspot.Dockerfile
       image-name: warp-speed-planet-search
    - internal/docker-push:
       image-name: warp-speed-planet-search
@@ -32,7 +32,7 @@ docker-build-and-push-graal:
       registry: https://$DOCKER_REGISTRY/v2
       repository: $DOCKER_REGISTRY/$DOCKER_REPO
       
-kubernetes-deploy:
+kubernetes-deploy-hotspot:
    box:
       id: alpine
       cmd: /bin/sh
@@ -52,10 +52,38 @@ kubernetes-deploy:
          command: create secret docker-registry wercker --docker-server=$DOCKER_REGISTRY --docker-email=nobody@oracle.com --docker-username=$DOCKER_USERNAME --docker-password='$OCI_AUTH_TOKEN'; echo create registry secret
       - script:
          name: "Visualise config"
-         code: cat app.yaml
+         code: cat k8.hotspot.yaml
       - kubectl:
          name: deploy to kubernetes
          server: $KUBERNETES_MASTER
          token: $KUBERNETES_AUTH_TOKEN
          insecure-skip-tls-verify: true
-         command: apply -f app.yaml
+         command: apply -f k8.hotspot.yaml
+         
+kubernetes-deploy-graal:
+   box:
+      id: alpine
+      cmd: /bin/sh
+   steps:
+      - bash-template
+      - kubectl:
+         name: delete secret
+         server: $KUBERNETES_MASTER
+         token: $KUBERNETES_AUTH_TOKEN
+         insecure-skip-tls-verify: true
+         command: delete secret wercker; echo delete registry secret
+      - kubectl:
+         name: create secret
+         server: $KUBERNETES_MASTER
+         token: $KUBERNETES_AUTH_TOKEN
+         insecure-skip-tls-verify: true
+         command: create secret docker-registry wercker --docker-server=$DOCKER_REGISTRY --docker-email=nobody@oracle.com --docker-username=$DOCKER_USERNAME --docker-password='$OCI_AUTH_TOKEN'; echo create registry secret
+      - script:
+         name: "Visualise config"
+         code: cat k8.graal.yaml
+      - kubectl:
+         name: deploy to kubernetes
+         server: $KUBERNETES_MASTER
+         token: $KUBERNETES_AUTH_TOKEN
+         insecure-skip-tls-verify: true
+         command: apply -f k8.graal.yaml

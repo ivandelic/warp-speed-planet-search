@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: warp-speed-planet-search
-        image: ${DOCKER_REGISTRY}/${DOCKER_REPO}:latest
+        image: ${DOCKER_REGISTRY}/${DOCKER_REPO}:hotspot
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
