@@ -13,6 +13,20 @@ docker-build-and-push:
       image-name: warp-speed-planet-search
    - internal/docker-push:
       image-name: warp-speed-planet-search
+      tag: hotspot
+      username: $DOCKER_USERNAME
+      password: $OCI_AUTH_TOKEN
+      registry: https://$DOCKER_REGISTRY/v2
+      repository: $DOCKER_REGISTRY/$DOCKER_REPO
+      
+docker-build-and-push-graal:
+   steps:
+   - internal/docker-build:
+      dockerfile: graal.Dockerfile
+      image-name: warp-speed-planet-search-graal
+   - internal/docker-push:
+      image-name: warp-speed-planet-search-graal
+      tag: graalvm
       username: $DOCKER_USERNAME
       password: $OCI_AUTH_TOKEN
       registry: https://$DOCKER_REGISTRY/v2
