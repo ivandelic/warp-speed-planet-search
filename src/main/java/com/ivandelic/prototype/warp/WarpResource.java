@@ -13,9 +13,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
+import com.ivandelic.prototype.warp.model.SearchResult;
 import com.ivandelic.prototype.warp.service.UniverseService;
 
 @Path("/traverse")
@@ -38,7 +40,7 @@ public class WarpResource {
     @GET
     @Operation(summary = "Find habitable planets in the universe traversing galaxies, stars and planets.", description = " Algorithm is using classic looping and Java Streams.")
     @Produces(MediaType.APPLICATION_JSON)
-    public JsonObject findHabitableDemo(
+    public Response findHabitableDemo(
     		@QueryParam(value = "planetMinEsi") Double planetMinEsi,
     		@QueryParam(value = "refMassMin") Double refMassMin,
     		@QueryParam(value = "refMassMax") Double refMassMax,
@@ -57,19 +59,24 @@ public class WarpResource {
     		refTempMax = warpProvider.getRefTempMax();
     	
     	long t1 = System.currentTimeMillis();
-    	long count = UniverseService.traverseUniverse(warpApplication.getUniverse(), planetMinEsi, refMassMin, refMassMax, refTempMin, refTempMax);
+    	SearchResult result = UniverseService.traverseUniverse(warpApplication.getUniverse(), planetMinEsi, refMassMin, refMassMax, refTempMin, refTempMax);
     	long t2 = System.currentTimeMillis();
     	long tx = t2 - t1;
     	
     	log.info(String.format("Counted Time %d", tx));
     	
-    	return createResponse(count, tx);
+    	return createResponse(result, tx);
     }
 
-    private JsonObject createResponse(long count, long time) {
-        return JSON.createObjectBuilder()
-        		.add("habitablePlanets", count)
-        		.add("time", time)
-        		.build();
+    private Response createResponse(SearchResult result, long time) {
+        JsonObject json = JSON.createObjectBuilder()
+        		.add("habitableStars", result.getHabitableStars())
+        		.add("habitablePlanets", result.getHabitablePlanets())
+        		.add("time", time).build();
+        
+        return Response.ok(json)
+        	.header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Methods", "GET")
+        	.build();
     }
 }

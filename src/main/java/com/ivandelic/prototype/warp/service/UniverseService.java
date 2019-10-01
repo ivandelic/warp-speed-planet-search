@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import com.ivandelic.prototype.warp.model.Galaxy;
 import com.ivandelic.prototype.warp.model.Planet;
+import com.ivandelic.prototype.warp.model.SearchResult;
 import com.ivandelic.prototype.warp.model.Star;
 import com.ivandelic.prototype.warp.model.Universe;
 
@@ -85,7 +86,7 @@ public final class UniverseService {
 	 * @param refTempMax	maximal temperature
 	 * @return number of habitable planets
 	 */
-	public static final long traverseUniverse(Universe universe, double planetMinEsi, double refMassMin, double refMassMax, double refTempMin, double refTempMax) {
+	public static final SearchResult traverseUniverse(Universe universe, double planetMinEsi, double refMassMin, double refMassMax, double refTempMin, double refTempMax) {
         long habitablePlanets = 0, habitableStars = 0;
         long start = System.currentTimeMillis(), last = start;
         
@@ -115,7 +116,7 @@ public final class UniverseService {
         
         log.info(String.format("Habitable stars: %d, Habitable planets: %d (%d ms)", habitableStars, habitablePlanets, System.currentTimeMillis() - start));
         
-        return habitablePlanets;
+        return new SearchResult(habitableStars, habitablePlanets);
 	}
 	
 	/**
