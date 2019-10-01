@@ -91,19 +91,27 @@ public final class UniverseService {
         
         Galaxy[] galaxies = universe.getGalaxies();
         
-        for (int g = 0; g < galaxies.length; g++) {
-        	if (g > 0) {
-        		long now = System.currentTimeMillis();
-                log.info(String.format("%d (%d ms)", g, now - last));
-                last = now;
-        	}
-        	Star[] stars = galaxies[g].getStars();
-        	for (int s = 0; s < stars.length; s++) {
-        		if (stars[s].isHabbitable(refMassMin, refMassMax, refTempMin, refTempMax))
-        			habitableStars++;
-        		habitablePlanets += Arrays.stream(stars[s].getPlanets()).filter(planet -> planet.getEsi() >= planetMinEsi).count();
-        	}
-        }
+        if (galaxies != null)
+	        for (int g = 0; g < galaxies.length; g++) {
+	        	Galaxy galaxy = galaxies[g];
+	        	if (g > 0) {
+	        		long now = System.currentTimeMillis();
+	                log.info(String.format("%d (%d ms)", g, now - last));
+	                last = now;
+	        	}
+	        	if (galaxy != null) {
+		        	Star[] stars = galaxy.getStars();
+		        	if (stars != null)
+			        	for (int s = 0; s < stars.length; s++) {
+			        		Star star = stars[s];
+			        		if (star != null) {
+				        		if (star.isHabbitable(refMassMin, refMassMax, refTempMin, refTempMax))
+				        			habitableStars++;
+				        		habitablePlanets += Arrays.stream(star.getPlanets()).filter(planet -> planet.getEsi() >= planetMinEsi).count();
+			        		}
+		        		}
+	        	}
+	        }
         
         log.info(String.format("Habitable stars: %d, Habitable planets: %d (%d ms)", habitableStars, habitablePlanets, System.currentTimeMillis() - start));
         
