@@ -5,11 +5,11 @@ metadata:
   labels:
     app: warp-speed-planet-search
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: warp-speed-planet-search
   ports:
-  - port: 8080
+  - port: 80
     targetPort: 8080
     name: http
 ---
