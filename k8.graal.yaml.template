@@ -28,7 +28,7 @@ spec:
       containers:
       - name: warp-speed-planet-search-graal
         image: ${DOCKER_REGISTRY}/${DOCKER_REPO}:graalvm
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
 ---
