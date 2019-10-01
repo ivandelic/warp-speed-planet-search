@@ -1,13 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: warp-speed-planet-search
+  name: warp-speed-planet-search-hotspot
   labels:
-    app: warp-speed-planet-search
+    app: warp-speed-planet-search-hotspot
 spec:
   type: LoadBalancer
   selector:
-    app: warp-speed-planet-search
+    app: warp-speed-planet-search-hotspot
   ports:
   - port: 80
     targetPort: 8080
@@ -16,17 +16,17 @@ spec:
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: warp-speed-planet-search
+  name: warp-speed-planet-search-hotspot
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: warp-speed-planet-search
+        app: warp-speed-planet-search-hotspot
         version: v1
     spec:
       containers:
-      - name: warp-speed-planet-search
+      - name: warp-speed-planet-search-hotspot
         image: ${DOCKER_REGISTRY}/${DOCKER_REPO}:hotspot
         imagePullPolicy: IfNotPresent
         ports:
