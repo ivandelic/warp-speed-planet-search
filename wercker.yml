@@ -38,10 +38,10 @@ kubernetes-deploy:
          command: create secret docker-registry wercker --docker-server=$DOCKER_REGISTRY --docker-email=nobody@oracle.com --docker-username=$DOCKER_USERNAME --docker-password='$OCI_AUTH_TOKEN'; echo create registry secret
       - script:
          name: "Visualise config"
-         code: cat app.yml
+         code: cat app.yaml
       - kubectl:
          name: deploy to kubernetes
          server: $KUBERNETES_MASTER
          token: $KUBERNETES_AUTH_TOKEN
          insecure-skip-tls-verify: true
-         command: apply -f kubernetes.yml
+         command: apply -f app.yaml
