@@ -58,13 +58,13 @@ public final class UniverseService {
 	
 	/**
 	 * Find habitable planets in the universe traversing galaxies, stars and planets. Algorithm is using Java Streams.
-	 * @param universe
-	 * @param planetMinEsi
-	 * @param refMassMin
-	 * @param refMassMax
-	 * @param refTempMin
-	 * @param refTempMax
-	 * @return
+	 * @param universe		universe to search within
+	 * @param planetMinEsi	minimal ESI classification
+	 * @param refMassMin	minimal mass
+	 * @param refMassMax	maximal mass
+	 * @param refTempMin	minimal temperature
+	 * @param refTempMax	maximal temperature
+	 * @return number of habitable planets
 	 */
 	public static final long traverseUniverseStream(Universe universe, double planetMinEsi, double refMassMin, double refMassMax, double refTempMin, double refTempMax) {
 		long count = Arrays.stream(universe.getGalaxies())

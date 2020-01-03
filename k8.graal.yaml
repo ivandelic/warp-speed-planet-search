@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: warp-speed-planet-search-graal
-        image: ${DOCKER_REGISTRY}/${DOCKER_REPO}:graal
+        image: eu-frankfurt-1.ocir.io/oraseemeaceeociworkshop/ivandelic/warp/warp-speed-planet-search:graal
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

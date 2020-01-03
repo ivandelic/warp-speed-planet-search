@@ -1,0 +1,41 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: warp-speed-planet-search-hotspot-service
+  labels:
+    app: warp-speed-planet-search-hotspot
+spec:
+  type: LoadBalancer
+  selector:
+    app: warp-speed-planet-search-hotspot
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: http
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: warp-speed-planet-search-hotspot-deployment
+  labels:
+    app: warp-speed-planet-search-hotspot
+spec:
+  selector:
+    matchLabels:
+      app: warp-speed-planet-search-hotspot
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: warp-speed-planet-search-hotspot
+        version: v1
+    spec:
+      containers:
+      - name: warp-speed-planet-search-hotspot
+        image: eu-frankfurt-1.ocir.io/oraseemeaceeociworkshop/ivandelic/warp/warp-speed-planet-search:hotspot
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: ocirsecret
+---

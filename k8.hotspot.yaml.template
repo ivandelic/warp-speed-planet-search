@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: warp-speed-planet-search-hotspot
+  name: warp-speed-planet-search-hotspot-service
   labels:
     app: warp-speed-planet-search-hotspot
 spec:
@@ -14,10 +14,15 @@ spec:
     name: http
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
-  name: warp-speed-planet-search-hotspot
+  name: warp-speed-planet-search-hotspot-deployment
+  labels:
+    app: warp-speed-planet-search-hotspot
 spec:
+  selector:
+    matchLabels:
+      app: warp-speed-planet-search-hotspot
   replicas: 1
   template:
     metadata:
@@ -31,4 +36,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+      - name: ocirsecret
 ---
